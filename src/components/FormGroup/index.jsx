@@ -15,3 +15,7 @@ FormGroup.propTypes = {
   children: PropTypes.node.isRequired,
   error: PropTypes.string,
 };
+
+FormGroup.defaultProps = {
+  error: null,
+};

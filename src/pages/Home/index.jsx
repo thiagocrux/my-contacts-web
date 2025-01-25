@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/images/icons/arrow.svg';
@@ -14,7 +14,6 @@ import {
   Card,
   InputSearchContainer,
 } from './styles';
-import { useMemo } from 'react';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -25,9 +24,9 @@ export default function Home() {
   const filteredContacts = useMemo(
     () =>
       contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
       ),
-    [contacts, searchTerm]
+    [contacts, searchTerm],
   );
 
   useEffect(() => {
