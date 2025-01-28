@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
+import APIError from '../../errors/APIError';
 import Loader from '../../components/Loader';
 
 import {
@@ -38,7 +39,7 @@ export default function Home() {
         const contactsList = await ContactsService.listContacts(orderBy);
         setContacts(contactsList);
       } catch (error) {
-        console.log('error', error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
