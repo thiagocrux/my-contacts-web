@@ -75,7 +75,7 @@ export default function Home() {
         <Link to="/new">Novo contato</Link>
       </Header>
       {filteredContacts.length > 0 && (
-        <ListHeader orderBy={orderBy}>
+        <ListHeader $orderBy={orderBy}>
           <button
             type="button"
             className="sort-button"
