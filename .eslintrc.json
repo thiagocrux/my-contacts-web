@@ -21,10 +21,12 @@
   "rules": {
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-no-bind": "off",
     "react/react-in-jsx-scope": "off",
-    "react-hooks/exhaustive-deps": "warn",
-    "react-hooks/rules-of-hooks": "error"
+    "react/require-default-props": "warn"
   }
 }
