@@ -11,7 +11,7 @@ export default function NewContact() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        category_id: formData.categoryId || null,
+        category_id: formData.categoryId,
       };
 
       const response = await ContactsService.createContact(contact);
@@ -20,7 +20,8 @@ export default function NewContact() {
       console.log(response);
     } catch (error) {
       // TODO: Implementar lógica de erro
-      alert('Ocorreu um erro ao cadastrar o contato');
+      // alert('Ocorreu um erro ao cadastrar o contato');
+      alert(error);
     }
   }
 
