@@ -29,32 +29,38 @@ export default function Home() {
     searchTerm,
   } = useContainer();
 
+  const hasContacts = contacts.length > 0;
+  const isContactsListEmpty = !hasError && !isLoading && !hasContacts;
+  const hasNoSearchResult =
+    !hasError && hasContacts && filteredContacts.length < 1;
+
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      {contacts.length > 0 && !hasError && (
+
+      {hasContacts && !hasError && (
         <InputSearch value={searchTerm} onChange={handleChangeSearchTerm} />
       )}
+
       <Header
         contactsQuantity={contacts.length}
         filteredContactsQuantity={filteredContacts.length}
         hasError={hasError}
       />
+
       {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
-      {!hasError && (
-        <>
-          {contacts.length < 1 && !isLoading && <EmptyList />}
-          {contacts.length > 0 && filteredContacts.length < 1 && (
-            <SearchNotFound searchTerm={searchTerm} />
-          )}
-          <ContactsList
-            orderBy={orderBy}
-            filteredContacts={filteredContacts}
-            onToggleOrderBy={handleToggleOrderBy}
-            onDeleteContact={handleDeleteContact}
-          />
-        </>
+      {isContactsListEmpty && <EmptyList />}
+      {hasNoSearchResult && <SearchNotFound searchTerm={searchTerm} />}
+
+      {hasContacts && (
+        <ContactsList
+          orderBy={orderBy}
+          filteredContacts={filteredContacts}
+          onToggleOrderBy={handleToggleOrderBy}
+          onDeleteContact={handleDeleteContact}
+        />
       )}
+
       <Modal
         danger
         isLoading={isLoadingDelete}
