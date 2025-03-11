@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 import Button from '../Button';
 import ReactPortal from '../ReactPortal';
 
-import { Container, Overlay, Footer } from './styles';
+import { Container, Footer, Overlay } from './styles';
 
 export default function Modal({
   danger,
@@ -16,13 +17,34 @@ export default function Modal({
   onCancel,
   onConfirm,
 }) {
-  if (!visible) {
+  const LEAVING_ANIMATION_TIMEOUT = 200;
+  const [shouldRender, setShouldRender] = useState(visible);
+
+  useEffect(() => {
+    if (visible) {
+      setShouldRender(true);
+    }
+
+    let timeoutId = null;
+
+    if (!visible) {
+      timeoutId = setTimeout(() => {
+        setShouldRender(false);
+      }, LEAVING_ANIMATION_TIMEOUT);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [visible]);
+
+  if (!shouldRender) {
     return null;
   }
 
   return (
     <ReactPortal containerId="modal-root">
-      <Overlay>
+      <Overlay isLeaving={!visible}>
         <Container danger={danger}>
           <h1>{title}</h1>
           <div className="modal-body">{children}</div>
