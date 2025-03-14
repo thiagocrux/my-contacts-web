@@ -1,39 +1,85 @@
-import { useState, useCallback } from 'react';
+import { useEffect, createRef, useRef, useState, useCallback } from 'react';
 
 export default function useAnimatedList(initialValue = []) {
   const [items, setItems] = useState(initialValue);
-  const [idsOfItemsPendingRemoval, setIdsOfItemsPendingRemoval] = useState([]);
+  const [pendingRemovalItemsIds, setPendingRemovalItemsIds] = useState([]);
+  const animatedRefs = useRef(new Map());
+  const animationEndListeners = useRef(new Map());
 
-  const handleItemRemoval = useCallback((id) => {
-    setIdsOfItemsPendingRemoval((prevState) => [...prevState, id]);
+  const handleAnimationEnd = useCallback((itemId) => {
+    const removeListener = animationEndListeners.current.get(itemId);
+    removeListener();
+    animationEndListeners.current.delete(itemId);
+    animatedRefs.current.delete(itemId);
+    setItems((prevState) => prevState.filter((item) => item.id !== itemId));
+
+    setPendingRemovalItemsIds((prevState) =>
+      prevState.filter((id) => id !== itemId),
+    );
   }, []);
 
-  const handleAnimationEnd = useCallback(
-    (id) => {
-      setItems((prevState) => prevState.filter((message) => message.id !== id));
+  useEffect(() => {
+    pendingRemovalItemsIds.forEach((itemId) => {
+      const animatedRef = animatedRefs.current.get(itemId);
+      const animatedElement = animatedRef?.current;
+      const alreadyHasListener = animationEndListeners.current.has(itemId);
 
-      setIdsOfItemsPendingRemoval((prevState) =>
-        prevState.filter((messageId) => messageId !== id),
-      );
-    },
-    [setItems],
-  );
+      if (animatedRef?.current && !alreadyHasListener) {
+        const onAnimationEnd = () => {
+          handleAnimationEnd(itemId);
+        };
+
+        const removeListener = () => {
+          animatedElement.removeEventListener('animationend', onAnimationEnd);
+        };
+
+        animatedElement.addEventListener('animationend', onAnimationEnd);
+        animationEndListeners.current.set(itemId, removeListener);
+      }
+    });
+  }, [handleAnimationEnd, pendingRemovalItemsIds]);
+
+  useEffect(() => {
+    const removeListeners = animationEndListeners.current;
+
+    return () => {
+      removeListeners.forEach((removeListener) => removeListener());
+    };
+  }, []);
+
+  const handleRemoveItem = useCallback((id) => {
+    setPendingRemovalItemsIds((prevState) => [...prevState, id]);
+  }, []);
+
+  const getAnimatedRef = useCallback((itemId) => {
+    let animatedRef = animatedRefs.current.get(itemId);
+
+    if (!animatedRef) {
+      animatedRef = createRef();
+      animatedRefs.current.set(itemId, animatedRef);
+    }
+
+    return animatedRef;
+  }, []);
 
   const renderList = useCallback(
     (renderItem) =>
-      items.map((item) =>
-        renderItem(item, {
-          isLeaving: idsOfItemsPendingRemoval.includes(item.id),
-        }),
-      ),
-    [idsOfItemsPendingRemoval, items],
+      items.map((item) => {
+        const isLeaving = pendingRemovalItemsIds.includes(item.id);
+        const animatedRef = getAnimatedRef(item.id);
+
+        return renderItem(item, {
+          isLeaving,
+          animatedRef,
+        });
+      }),
+    [pendingRemovalItemsIds, items, getAnimatedRef],
   );
 
   return {
     items,
     setItems,
-    handleItemRemoval,
-    handleAnimationEnd,
+    handleRemoveItem,
     renderList,
   };
 }
