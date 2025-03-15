@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 
-import { forwardRef } from 'react';
-
 import Button from '../Button';
 import FormGroup from '../FormGroup';
 import Input from '../Input';
@@ -10,7 +8,7 @@ import useContainer from './useContainer';
 
 import { ButtonContainer, Form } from './styles';
 
-const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
+export default function ContactForm({ buttonLabel, onSubmit, ref }) {
   const {
     name,
     phone,
@@ -79,11 +77,10 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
       </ButtonContainer>
     </Form>
   );
-});
+}
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  ref: PropTypes.shape().isRequired,
 };
-
-export default ContactForm;
