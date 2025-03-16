@@ -10,7 +10,7 @@ function ToastMessage({ message, isLeaving, onRemoveMessage, animatedRef }) {
   useEffect(() => {
     const timeoutId = setTimeout(
       () => onRemoveMessage(message.id),
-      message.duration,
+      message.duration
     );
 
     return () => {
@@ -29,7 +29,7 @@ function ToastMessage({ message, isLeaving, onRemoveMessage, animatedRef }) {
       onClick={handleRemoveToast}
       tabIndex={0}
       role="button"
-      isLeaving={isLeaving}
+      $isLeaving={isLeaving}
     >
       {message.type === 'danger' && <img src={xCircleIcon} alt="X" />}
       {message.type === 'success' && <img src={checkCircleIcon} alt="Check" />}

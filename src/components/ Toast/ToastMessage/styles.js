@@ -49,8 +49,8 @@ export const Container = styled.div`
 
   ${({ type }) => containerVariants[type] || containerVariants.default}
 
-  ${({ isLeaving }) =>
-    isLeaving &&
+  ${({ $isLeaving }) =>
+    $isLeaving &&
     css`
       animation: ${messageOut} 0.2s forwards;
     `}

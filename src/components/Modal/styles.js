@@ -53,8 +53,8 @@ export const Overlay = styled.div`
   justify-content: center;
   animation: ${fadeIn} 0.3s;
 
-  ${({ isLeaving }) =>
-    isLeaving &&
+  ${({ $isLeaving }) =>
+    $isLeaving &&
     css`
       animation: ${fadeOut} 0.2s forwards;
     `}
@@ -71,8 +71,8 @@ export const Container = styled.div`
 
   > h1 {
     font-size: 22px;
-    color: ${({ theme, danger }) =>
-      danger ? theme.colors.danger.main : theme.colors.gray[200]};
+    color: ${({ theme, $danger }) =>
+      $danger ? theme.colors.danger.main : theme.colors.gray[200]};
   }
 
   p {
@@ -83,8 +83,8 @@ export const Container = styled.div`
     margin-top: 32px;
   }
 
-  ${({ isLeaving }) =>
-    isLeaving &&
+  ${({ $isLeaving }) =>
+    $isLeaving &&
     css`
       animation: ${scaleOut} 0.2s forwards;
     `}
