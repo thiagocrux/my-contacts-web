@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { Container } from './styles';
@@ -21,7 +21,7 @@ export default function Header({
           {filteredContactsQuantity === 1 ? 'contato' : 'contatos'}
         </strong>
       )}
-      <Link to="/new">Novo contato</Link>
+      <Link to="../new">Novo contato</Link>
     </Container>
   );
 }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import edit from '../../../../assets/images/icons/edit.svg';
 import trash from '../../../../assets/images/icons/trash.svg';
@@ -37,7 +37,7 @@ export default function ContactsList({
             <span>{contact.phone}</span>
           </div>
           <div className="actions">
-            <Link to={`/edit/${contact.id}`}>
+            <Link to={`../edit/${contact.id}`}>
               <img src={edit} alt="Edit" />
             </Link>
             <button type="button" onClick={() => onDeleteContact(contact)}>
@@ -61,7 +61,7 @@ ContactsList.propTypes = {
         id: PropTypes.string,
         name: PropTypes.string,
       }),
-    }),
+    })
   ).isRequired,
   orderBy: PropTypes.string.isRequired,
   onToggleOrderBy: PropTypes.func.isRequired,
