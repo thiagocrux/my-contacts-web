@@ -16,9 +16,9 @@ export default function useHome() {
   const filteredContacts = useMemo(
     () =>
       contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
       ),
-    [contacts, searchTerm],
+    [contacts, searchTerm]
   );
 
   const loadContacts = useCallback(async () => {
@@ -27,7 +27,7 @@ export default function useHome() {
       const contactsList = await ContactsService.listContacts(orderBy);
       setHasError(false);
       setContacts(contactsList);
-    } catch (error) {
+    } catch {
       setHasError(true);
       setContacts([]);
     } finally {
@@ -67,7 +67,7 @@ export default function useHome() {
       handleCloseDeleteModal();
 
       setContacts((prevState) =>
-        prevState.filter((contact) => contact.id !== contactBeingDeleted.id),
+        prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
       );
 
       toast({ type: 'success', text: 'Contato deletado com sucesso!' });
