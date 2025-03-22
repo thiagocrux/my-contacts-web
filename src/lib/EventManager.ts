@@ -1,37 +1,37 @@
+import { Toast } from '../types';
+
+type Payload = Omit<Toast, 'id'>;
+type Listener = (payload: Payload) => void;
+
 export default class EventManager {
+  listeners;
+
   constructor() {
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
     this.listeners = new Map();
   }
 
   // addEventListener
-  on(event: any, listener: any) {
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
+  on(event: string, listener: Listener) {
     if (!this.listeners.has(event)) {
-      // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
       this.listeners.set(event, []);
     }
 
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
     this.listeners.get(event).push(listener);
   }
 
   // dispatchEvent
-  emit(event: any, payload: any) {
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
+  emit(event: string, payload: Payload) {
     if (!this.listeners.has(event)) {
       return;
     }
 
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
-    this.listeners.get(event).forEach((listener: any) => {
+    this.listeners.get(event).forEach((listener: Listener) => {
       listener(payload);
     });
   }
 
   // removeEventListener
-  removeListener(event: any, listenerToRemove: any) {
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
+  removeListener(event: string, listenerToRemove: Listener) {
     const listeners = this.listeners.get(event);
 
     if (!listeners) {
@@ -39,10 +39,9 @@ export default class EventManager {
     }
 
     const filteredListeners = listeners.filter(
-      (listener: any) => listener !== listenerToRemove,
+      (listener: Listener) => listener !== listenerToRemove
     );
 
-    // @ts-expect-error TS(2339): Property 'listeners' does not exist on type 'Event... Remove this comment to see the full error message
     this.listeners.set(event, filteredListeners);
   }
 }

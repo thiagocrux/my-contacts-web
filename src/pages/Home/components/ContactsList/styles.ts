@@ -48,7 +48,7 @@ export const Card = styled.div`
   }
 `;
 
-export const ListHeader = styled.header`
+export const ListHeader = styled.header<{ $orderBy: 'asc' | 'desc' }>`
   margin-top: 24px;
   margin-bottom: 8px;
 
@@ -66,7 +66,6 @@ export const ListHeader = styled.header`
 
     img {
       margin-right: 8px;
-      // @ts-expect-error TS(2339): Property '$orderBy' does not exist on type 'Execut... Remove this comment to see the full error message
       transform: ${({ $orderBy }) =>
         $orderBy === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)'};
       transition: transform 0.2s ease-in;

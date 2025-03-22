@@ -36,7 +36,10 @@ const containerVariants = {
   `,
 };
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  $type: 'default' | 'success' | 'danger';
+  $isLeaving: boolean;
+}>`
   padding: 16px 32px;
   color: #fff;
   border-radius: 4px;
@@ -47,10 +50,8 @@ export const Container = styled.div`
   cursor: pointer;
   animation: ${messageIn} 0.3s;
 
-  // @ts-expect-error TS(2339): Property 'type' does not exist on type 'ExecutionC... Remove this comment to see the full error message
-  ${({ type }) => containerVariants[type] || containerVariants.default}
+  ${({ $type }) => containerVariants[$type] || containerVariants.default}
 
-  // @ts-expect-error TS(2339): Property '$isLeaving' does not exist on type 'Exec... Remove this comment to see the full error message
   ${({ $isLeaving }) =>
     $isLeaving &&
     css`

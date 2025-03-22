@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.header`
+export const Container = styled.header<{
+  $justifyContent: 'flex-end' | 'space-between' | 'center';
+}>`
   display: flex;
   align-items: center;
   // @ts-expect-error TS(2339): Property '$justifyContent' does not exist on type ... Remove this comment to see the full error message

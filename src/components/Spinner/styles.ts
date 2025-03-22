@@ -34,9 +34,8 @@ const round = keyframes`
   }
 `;
 
-export const StyledSpinner = styled.div`
+export const StyledSpinner = styled.div<{ size: number }>`
   color: ${({ theme }) => theme.colors.primary.main};
-  // @ts-expect-error TS(2339): Property 'size' does not exist on type 'ExecutionC... Remove this comment to see the full error message
   font-size: ${({ size }) => `${size}px`};
   width: 1em;
   height: 1em;
@@ -44,10 +43,6 @@ export const StyledSpinner = styled.div`
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-animation:
-    ${load} 1.7s infinite ease,
-    ${round} 1.7s infinite ease;
-  animation:
-    ${load} 1.7s infinite ease,
-    ${round} 1.7s infinite ease;
+  -webkit-animation: ${load} 1.7s infinite ease, ${round} 1.7s infinite ease;
+  animation: ${load} 1.7s infinite ease, ${round} 1.7s infinite ease;
 `;

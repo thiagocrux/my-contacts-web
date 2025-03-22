@@ -26,8 +26,7 @@ import { useCallback, useEffect, useRef } from 'react';
  * }
  */
 export default function useIsMounted() {
-  // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
-  const isMountedRef = useRef();
+  const isMountedRef = useRef<boolean>(null);
 
   useEffect(() => {
     isMountedRef.current = true;

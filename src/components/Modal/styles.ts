@@ -40,7 +40,7 @@ const scaleOut = keyframes`
   }
 `;
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ $isLeaving: boolean }>`
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);
   position: fixed;
@@ -53,7 +53,6 @@ export const Overlay = styled.div`
   justify-content: center;
   animation: ${fadeIn} 0.3s;
 
-  // @ts-expect-error TS(2339): Property '$isLeaving' does not exist on type 'Exec... Remove this comment to see the full error message
   ${({ $isLeaving }) =>
     $isLeaving &&
     css`
@@ -61,7 +60,7 @@ export const Overlay = styled.div`
     `}
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isLeaving: boolean; $danger: boolean }>`
   background: #fff;
   border-radius: 4px;
   padding: 24px;
@@ -72,7 +71,6 @@ export const Container = styled.div`
 
   > h1 {
     font-size: 22px;
-    // @ts-expect-error TS(2339): Property '$danger' does not exist on type 'Executi... Remove this comment to see the full error message
     color: ${({ theme, $danger }) =>
       $danger ? theme.colors.danger.main : theme.colors.gray[200]};
   }
@@ -85,7 +83,6 @@ export const Container = styled.div`
     margin-top: 32px;
   }
 
-  // @ts-expect-error TS(2339): Property '$isLeaving' does not exist on type 'Exec... Remove this comment to see the full error message
   ${({ $isLeaving }) =>
     $isLeaving &&
     css`

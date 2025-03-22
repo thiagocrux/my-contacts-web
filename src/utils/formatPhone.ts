@@ -1,5 +1,7 @@
-export default function formatPhone(phoneNumber: any) {
-  if (!phoneNumber) return;
+export default function formatPhone(phoneNumber: string) {
+  if (!phoneNumber) {
+    return;
+  }
 
   return phoneNumber
     .replace(/\D/g, '')

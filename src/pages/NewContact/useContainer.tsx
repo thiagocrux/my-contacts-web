@@ -1,16 +1,16 @@
 import { useRef } from 'react';
 
 import ContactsService from '../../services/ContactsService';
-import toast from '../../utils/toast';
+import { ContactFormInput, ContactFormRef } from '../../types';
+import { toast } from '../../utils';
 
 export default function useContainer() {
-  const contactFormRef = useRef(null);
+  const contactFormRef = useRef<ContactFormRef>(null);
 
-  async function handleSubmit(contact: any) {
+  async function handleSubmit(contact: ContactFormInput) {
     try {
       await ContactsService.createContact(contact);
-      // @ts-expect-error TS(2531): Object is possibly 'null'.
-      contactFormRef.current.resetFields();
+      contactFormRef.current?.resetFields();
 
       toast({
         type: 'success',

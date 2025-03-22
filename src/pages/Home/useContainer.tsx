@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   useCallback,
   useDeferredValue,
   useEffect,
@@ -9,29 +10,30 @@ import {
 import ContactsService from '../../services/ContactsService';
 import toast from '../../utils/toast';
 import isAbortError from '../../utils/isAbortError';
+import { Contact } from '../../types';
 
 export default function useHome() {
-  const [contacts, setContacts] = useState([]);
-  const [orderBy, setOrderBy] = useState('asc');
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [orderBy, setOrderBy] = useState<'asc' | 'desc'>('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
+  const [contactBeingDeleted, setContactBeingDeleted] =
+    useState<Contact | null>(null);
   const deferredSearchTerm = useDeferredValue(searchTerm);
 
   const filteredContacts = useMemo(
     () =>
-      contacts.filter((contact) =>
-        // @ts-expect-error TS(2339): Property 'name' does not exist on type 'never'.
+      contacts.filter((contact: Contact) =>
         contact.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
       ),
     [contacts, deferredSearchTerm]
   );
 
   const loadContacts = useCallback(
-    async (signal: any) => {
+    async (signal?: AbortSignal) => {
       try {
         setIsLoading(true);
 
@@ -69,16 +71,15 @@ export default function useHome() {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
   }, []);
 
-  function handleChangeSearchTerm(event: any) {
+  function handleChangeSearchTerm(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value);
   }
 
   function handleTryAgain() {
-    // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
     loadContacts();
   }
 
-  const handleDeleteContact = useCallback((contact: any) => {
+  const handleDeleteContact = useCallback((contact: Contact) => {
     setContactBeingDeleted(contact);
     setIsDeleteModalVisible(true);
   }, []);
@@ -89,13 +90,15 @@ export default function useHome() {
 
   async function handleConfirmDeleteContact() {
     try {
+      if (!contactBeingDeleted) {
+        return;
+      }
+
       setIsLoadingDelete(true);
-      // @ts-expect-error TS(2531): Object is possibly 'null'.
       await ContactsService.deleteContact(contactBeingDeleted.id);
       handleCloseDeleteModal();
 
       setContacts((prevState) =>
-        // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
         prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
       );
 

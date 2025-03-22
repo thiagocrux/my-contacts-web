@@ -1,14 +1,15 @@
 import HttpClient from './utils/HttpClient';
 import ContactMapper from './mappers/ContactMapper';
+import { ContactFormInput } from '../types';
 
 class ContactsService {
+  httpClient: HttpClient;
+
   constructor() {
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
     this.httpClient = new HttpClient('http://localhost:3001');
   }
 
-  async listContacts(orderBy = 'asc', signal: any) {
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
+  async listContacts(orderBy = 'asc', signal?: AbortSignal) {
     const contacts = await this.httpClient.get(`/contacts?orderBy=${orderBy}`, {
       headers: { Authorization: 'meutoken' },
       signal,
@@ -17,27 +18,23 @@ class ContactsService {
     return contacts.map(ContactMapper.toDomain);
   }
 
-  async getContactById(id: any, signal: any) {
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
+  async getContactById(id: string, signal?: AbortSignal) {
     const contact = await this.httpClient.get(`/contacts/${id}`, { signal });
     return ContactMapper.toDomain(contact);
   }
 
-  createContact(contact: any) {
+  createContact(contact: ContactFormInput, signal?: AbortSignal) {
     const body = ContactMapper.toPersistence(contact);
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
-    return this.httpClient.post('/contacts', { body });
+    return this.httpClient.post('/contacts', { body, signal });
   }
 
-  updateContact(id: any, contact: any) {
+  updateContact(id: string, contact: ContactFormInput, signal?: AbortSignal) {
     const body = ContactMapper.toPersistence(contact);
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
-    return this.httpClient.put(`/contacts/${id}`, { body });
+    return this.httpClient.put(`/contacts/${id}`, { body, signal });
   }
 
-  deleteContact(id: any) {
-    // @ts-expect-error TS(2339): Property 'httpClient' does not exist on type 'Cont... Remove this comment to see the full error message
-    return this.httpClient.delete(`/contacts/${id}`);
+  deleteContact(id: string, signal?: AbortSignal) {
+    return this.httpClient.delete(`/contacts/${id}`, { signal });
   }
 }
 

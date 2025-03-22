@@ -1,16 +1,14 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-
+import { ChangeEvent } from 'react';
 import { Container } from './styles';
 
-export default function InputSearch({
-  value,
-  onChange
-}: any) {
+type Props = {
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function InputSearch({ value, onChange }: Props) {
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Container>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <input
         value={value}
         type="text"
@@ -20,8 +18,3 @@ export default function InputSearch({
     </Container>
   );
 }
-
-InputSearch.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};

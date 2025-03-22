@@ -1,13 +1,23 @@
-import { useEffect, useState, useImperativeHandle } from 'react';
+import {
+  useEffect,
+  useState,
+  useImperativeHandle,
+  ChangeEvent,
+  RefObject,
+  FormEvent,
+} from 'react';
 
-// @ts-expect-error TS(6142): Module '../../hooks/useErrors' was resolved to '/h... Remove this comment to see the full error message
 import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
 import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
 import isAbortError from '../../utils/isAbortError';
+import { Contact, ContactFormInput, ContactFormRef } from '../../types';
 
-export default function useContainer(onSubmit: any, ref: any) {
+export default function useContainer(
+  onSubmit: (contact: ContactFormInput) => void,
+  ref: RefObject<ContactFormRef | null>
+) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -25,7 +35,7 @@ export default function useContainer(onSubmit: any, ref: any) {
           controller.signal
         );
         setCategories(categoriesList);
-      } catch (error) {
+      } catch (error: unknown) {
         if (isAbortError(error)) {
           return;
         }
@@ -44,11 +54,11 @@ export default function useContainer(onSubmit: any, ref: any) {
   useImperativeHandle(
     ref,
     () => ({
-      fillFormFields: (contact: any) => {
+      fillFormFields: (contact: Contact) => {
         setName(contact.name ?? '');
         setEmail(contact.email ?? '');
-        setPhone(formatPhone(contact.phone) ?? '');
-        setCategoryId(contact.category.id ?? '');
+        setPhone((contact.phone && formatPhone(contact.phone)) ?? '');
+        setCategoryId(contact.category?.id ?? '');
       },
       resetFields: () => {
         setName('');
@@ -63,7 +73,7 @@ export default function useContainer(onSubmit: any, ref: any) {
   const { errors, setError, removeError, getErrorMessageByFieldName } =
     useErrors();
 
-  function handleNameChange(event: any) {
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
     setName(event.target.value);
 
     if (!event.target.value) {
@@ -73,7 +83,7 @@ export default function useContainer(onSubmit: any, ref: any) {
     }
   }
 
-  function handleEmailChange(event: any) {
+  function handleEmailChange(event: ChangeEvent<HTMLInputElement>) {
     setEmail(event.target.value);
 
     if (event.target.value && !isEmailValid(event.target.value)) {
@@ -83,13 +93,13 @@ export default function useContainer(onSubmit: any, ref: any) {
     }
   }
 
-  function handlePhoneChange(event: any) {
+  function handlePhoneChange(event: ChangeEvent<HTMLInputElement>) {
     setPhone(formatPhone(event.target.value));
   }
 
   const isFormValid = name && !errors.length;
 
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setIsSubmitting(true);

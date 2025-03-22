@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{ $danger: boolean }>`
   height: 52px;
   border: none;
   padding: 0 16px;
@@ -29,8 +29,8 @@ export const StyledButton = styled.button`
   }
 
   // @ts-expect-error TS(2339): Property 'danger' does not exist on type 'Executio... Remove this comment to see the full error message
-  ${({ theme, danger }) =>
-    danger &&
+  ${({ theme, $danger }) =>
+    $danger &&
     css`
       background: ${theme.colors.danger.main};
 

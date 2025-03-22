@@ -1,16 +1,16 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import ContactsService from '../../services/ContactsService';
-import toast from '../../utils/toast';
-// @ts-expect-error TS(6142): Module '../../hooks/useSafeAsyncAction' was resolv... Remove this comment to see the full error message
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
+import ContactsService from '../../services/ContactsService';
+import { ContactFormInput, ContactFormRef } from '../../types';
 import isAbortError from '../../utils/isAbortError';
+import toast from '../../utils/toast';
 
 export default function useContainer() {
   const [isLoading, setIsLoading] = useState(true);
   const [contactName, setContactName] = useState('');
-  const contactFormRef = useRef(null);
+  const contactFormRef = useRef<ContactFormRef>(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,13 +22,12 @@ export default function useContainer() {
     async function loadContact() {
       try {
         const contact = await ContactsService.getContactById(
-          id,
+          String(id),
           controller.signal
         );
 
         safeAsyncAction(() => {
-          // @ts-expect-error TS(2531): Object is possibly 'null'.
-          contactFormRef.current.fillFormFields(contact);
+          contactFormRef.current?.fillFormFields(contact);
           setContactName(contact.name);
           setIsLoading(false);
         });
@@ -55,9 +54,13 @@ export default function useContainer() {
     };
   }, [id, navigate, safeAsyncAction]);
 
-  async function handleSubmit(contact: any) {
+  async function handleSubmit(contactFormInput: ContactFormInput) {
     try {
-      const updatedContact = await ContactsService.updateContact(id, contact);
+      const updatedContact = await ContactsService.updateContact(
+        String(id),
+        contactFormInput
+      );
+
       setContactName(updatedContact.name);
 
       toast({

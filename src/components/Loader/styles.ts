@@ -20,7 +20,7 @@ const fadeOut = keyframes`
   }
 `;
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ $isLeaving: boolean }>`
   width: 100%;
   height: 100%;
   position: fixed;
@@ -32,7 +32,6 @@ export const Overlay = styled.div`
   justify-content: center;
   animation: ${fadeIn} 0.3s;
 
-  // @ts-expect-error TS(2339): Property '$isLeaving' does not exist on type 'Exec... Remove this comment to see the full error message
   ${({ $isLeaving }) =>
     $isLeaving &&
     css`

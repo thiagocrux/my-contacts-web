@@ -1,5 +1,5 @@
 class CategoryMapper {
-  toDomain(persistenceCategory: any) {
+  toDomain(persistenceCategory: { id: string; name: string }) {
     return {
       id: persistenceCategory.id,
       name: persistenceCategory.name,

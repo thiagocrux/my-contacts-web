@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.input`
+export default styled.input<{ error?: boolean }>`
   width: 100%;
   border: 2px solid #fff;
   background: #fff;
@@ -21,7 +21,6 @@ export default styled.input`
     border-color: ${({ theme }) => theme.colors.gray[200]};
   }
 
-  // @ts-expect-error TS(2339): Property 'error' does not exist on type 'Execution... Remove this comment to see the full error message
   ${({ theme, error }) =>
     error &&
     css`
