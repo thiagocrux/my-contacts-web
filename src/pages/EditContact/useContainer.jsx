@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import ContactsService from '../../services/ContactsService';
 import toast from '../../utils/toast';
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
+import isAbortError from '../../utils/isAbortError';
 
 export default function useContainer() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,16 +16,25 @@ export default function useContainer() {
   const safeAsyncAction = useSafeAsyncAction();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadContact() {
       try {
-        const contact = await ContactsService.getContactById(id);
+        const contact = await ContactsService.getContactById(
+          id,
+          controller.signal
+        );
 
         safeAsyncAction(() => {
           contactFormRef.current.fillFormFields(contact);
           setContactName(contact.name);
           setIsLoading(false);
         });
-      } catch {
+      } catch (error) {
+        if (isAbortError(error)) {
+          return;
+        }
+
         safeAsyncAction(() => {
           navigate('/');
 
@@ -37,6 +47,10 @@ export default function useContainer() {
     }
 
     loadContact();
+
+    return () => {
+      controller.abort();
+    };
   }, [id, navigate, safeAsyncAction]);
 
   async function handleSubmit(contact) {

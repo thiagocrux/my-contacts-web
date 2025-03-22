@@ -4,6 +4,7 @@ import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
 import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
+import isAbortError from '../../utils/isAbortError';
 
 export default function useContainer(onSubmit, ref) {
   const [name, setName] = useState('');
@@ -15,16 +16,28 @@ export default function useContainer(onSubmit, ref) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadCategories() {
       try {
-        const categoriesList = await CategoriesService.listCategories();
+        const categoriesList = await CategoriesService.listCategories(
+          controller.signal
+        );
         setCategories(categoriesList);
-      } catch {
+      } catch (error) {
+        if (isAbortError(error)) {
+          return;
+        }
       } finally {
         setIsLoadingCategories(false);
       }
     }
+
     loadCategories();
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   useImperativeHandle(
@@ -43,7 +56,7 @@ export default function useContainer(onSubmit, ref) {
         setCategoryId('');
       },
     }),
-    [],
+    []
   );
 
   const { errors, setError, removeError, getErrorMessageByFieldName } =
