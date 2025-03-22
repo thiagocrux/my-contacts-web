@@ -1,4 +1,6 @@
 export default function formatPhone(phoneNumber) {
+  if (!phoneNumber) return;
+
   return phoneNumber
     .replace(/\D/g, '')
     .replace(/^(\d{2})\B/, '($1) ')
