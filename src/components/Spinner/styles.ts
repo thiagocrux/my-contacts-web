@@ -36,6 +36,7 @@ const round = keyframes`
 
 export const StyledSpinner = styled.div`
   color: ${({ theme }) => theme.colors.primary.main};
+  // @ts-expect-error TS(2339): Property 'size' does not exist on type 'ExecutionC... Remove this comment to see the full error message
   font-size: ${({ size }) => `${size}px`};
   width: 1em;
   height: 1em;

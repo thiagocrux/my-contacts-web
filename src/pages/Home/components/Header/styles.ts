@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
   display: flex;
   align-items: center;
+  // @ts-expect-error TS(2339): Property '$justifyContent' does not exist on type ... Remove this comment to see the full error message
   justify-content: ${({ $justifyContent }) => $justifyContent};
   margin-top: 32px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.gray[100]};

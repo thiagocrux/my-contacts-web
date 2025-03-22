@@ -1,12 +1,13 @@
 import { useEffect, useState, useImperativeHandle } from 'react';
 
+// @ts-expect-error TS(6142): Module '../../hooks/useErrors' was resolved to '/h... Remove this comment to see the full error message
 import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
 import formatPhone from '../../utils/formatPhone';
 import isEmailValid from '../../utils/isEmailValid';
 import isAbortError from '../../utils/isAbortError';
 
-export default function useContainer(onSubmit, ref) {
+export default function useContainer(onSubmit: any, ref: any) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -43,7 +44,7 @@ export default function useContainer(onSubmit, ref) {
   useImperativeHandle(
     ref,
     () => ({
-      fillFormFields: (contact) => {
+      fillFormFields: (contact: any) => {
         setName(contact.name ?? '');
         setEmail(contact.email ?? '');
         setPhone(formatPhone(contact.phone) ?? '');
@@ -62,7 +63,7 @@ export default function useContainer(onSubmit, ref) {
   const { errors, setError, removeError, getErrorMessageByFieldName } =
     useErrors();
 
-  function handleNameChange(event) {
+  function handleNameChange(event: any) {
     setName(event.target.value);
 
     if (!event.target.value) {
@@ -72,7 +73,7 @@ export default function useContainer(onSubmit, ref) {
     }
   }
 
-  function handleEmailChange(event) {
+  function handleEmailChange(event: any) {
     setEmail(event.target.value);
 
     if (event.target.value && !isEmailValid(event.target.value)) {
@@ -82,13 +83,13 @@ export default function useContainer(onSubmit, ref) {
     }
   }
 
-  function handlePhoneChange(event) {
+  function handlePhoneChange(event: any) {
     setPhone(formatPhone(event.target.value));
   }
 
   const isFormValid = name && !errors.length;
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
 
     setIsSubmitting(true);

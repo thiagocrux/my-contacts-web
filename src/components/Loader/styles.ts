@@ -32,6 +32,7 @@ export const Overlay = styled.div`
   justify-content: center;
   animation: ${fadeIn} 0.3s;
 
+  // @ts-expect-error TS(2339): Property '$isLeaving' does not exist on type 'Exec... Remove this comment to see the full error message
   ${({ $isLeaving }) =>
     $isLeaving &&
     css`

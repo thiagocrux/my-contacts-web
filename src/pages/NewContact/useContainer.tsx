@@ -6,9 +6,10 @@ import toast from '../../utils/toast';
 export default function useContainer() {
   const contactFormRef = useRef(null);
 
-  async function handleSubmit(contact) {
+  async function handleSubmit(contact: any) {
     try {
       await ContactsService.createContact(contact);
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       contactFormRef.current.resetFields();
 
       toast({

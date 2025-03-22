@@ -1,5 +1,5 @@
 class ContactMapper {
-  toPersistence(domainContact) {
+  toPersistence(domainContact: any) {
     return {
       id: domainContact.id,
       name: domainContact.name,
@@ -9,7 +9,7 @@ class ContactMapper {
     };
   }
 
-  toDomain(persistenceContact) {
+  toDomain(persistenceContact: any) {
     return {
       id: persistenceContact.id,
       name: persistenceContact.name,

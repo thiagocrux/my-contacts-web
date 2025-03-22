@@ -21,6 +21,7 @@ export default styled.input`
     border-color: ${({ theme }) => theme.colors.gray[200]};
   }
 
+  // @ts-expect-error TS(2339): Property 'error' does not exist on type 'Execution... Remove this comment to see the full error message
   ${({ theme, error }) =>
     error &&
     css`

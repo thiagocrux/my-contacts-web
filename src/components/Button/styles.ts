@@ -28,6 +28,7 @@ export const StyledButton = styled.button`
     cursor: default;
   }
 
+  // @ts-expect-error TS(2339): Property 'danger' does not exist on type 'Executio... Remove this comment to see the full error message
   ${({ theme, danger }) =>
     danger &&
     css`

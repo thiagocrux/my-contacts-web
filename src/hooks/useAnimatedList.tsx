@@ -6,11 +6,12 @@ export default function useAnimatedList(initialValue = []) {
   const animatedRefs = useRef(new Map());
   const animationEndListeners = useRef(new Map());
 
-  const handleAnimationEnd = useCallback((itemId) => {
+  const handleAnimationEnd = useCallback((itemId: any) => {
     const removeListener = animationEndListeners.current.get(itemId);
     removeListener();
     animationEndListeners.current.delete(itemId);
     animatedRefs.current.delete(itemId);
+    // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
     setItems((prevState) => prevState.filter((item) => item.id !== itemId));
 
     setPendingRemovalItemsIds((prevState) =>
@@ -47,11 +48,12 @@ export default function useAnimatedList(initialValue = []) {
     };
   }, []);
 
-  const handleRemoveItem = useCallback((id) => {
+  const handleRemoveItem = useCallback((id: any) => {
+    // @ts-expect-error TS(2345): Argument of type '(prevState: never[]) => any[]' i... Remove this comment to see the full error message
     setPendingRemovalItemsIds((prevState) => [...prevState, id]);
   }, []);
 
-  const getAnimatedRef = useCallback((itemId) => {
+  const getAnimatedRef = useCallback((itemId: any) => {
     let animatedRef = animatedRefs.current.get(itemId);
 
     if (!animatedRef) {
@@ -63,16 +65,17 @@ export default function useAnimatedList(initialValue = []) {
   }, []);
 
   const renderList = useCallback(
-    (renderItem) =>
-      items.map((item) => {
-        const isLeaving = pendingRemovalItemsIds.includes(item.id);
-        const animatedRef = getAnimatedRef(item.id);
+    (renderItem: any) => items.map((item) => {
+      // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
+      const isLeaving = pendingRemovalItemsIds.includes(item.id);
+      // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
+      const animatedRef = getAnimatedRef(item.id);
 
-        return renderItem(item, {
-          isLeaving,
-          animatedRef,
-        });
-      }),
+      return renderItem(item, {
+        isLeaving,
+        animatedRef,
+      });
+    }),
     [pendingRemovalItemsIds, items, getAnimatedRef],
   );
 

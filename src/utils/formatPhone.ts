@@ -1,4 +1,4 @@
-export default function formatPhone(phoneNumber) {
+export default function formatPhone(phoneNumber: any) {
   if (!phoneNumber) return;
 
   return phoneNumber

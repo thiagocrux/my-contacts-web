@@ -1,9 +1,13 @@
 import { memo } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
+// @ts-expect-error TS(2307): Cannot find module '../../../../assets/images/icon... Remove this comment to see the full error message
 import edit from '../../../../assets/images/icons/edit.svg';
+// @ts-expect-error TS(2307): Cannot find module '../../../../assets/images/icon... Remove this comment to see the full error message
 import trash from '../../../../assets/images/icons/trash.svg';
+// @ts-expect-error TS(2307): Cannot find module '../../../../assets/images/icon... Remove this comment to see the full error message
 import arrow from '../../../../assets/images/icons/arrow.svg';
 
 import { Card, ListHeader } from './styles';
@@ -12,43 +16,55 @@ function ContactsList({
   orderBy,
   filteredContacts,
   onToggleOrderBy,
-  onDeleteContact,
-}) {
-  return (
-    <>
-      {filteredContacts.length > 0 && (
-        <ListHeader $orderBy={orderBy}>
-          <button
-            type="button"
-            className="sort-button"
-            onClick={onToggleOrderBy}
-          >
-            <span>Nome</span> <img src={arrow} alt="Arrow" />
-          </button>
-        </ListHeader>
-      )}
-      {filteredContacts.map((contact) => (
-        <Card key={contact.id}>
-          <div className="info">
-            <div className="contact-name">
-              <strong>{contact.name}</strong>
-              {contact.category.name && <small>{contact.category.name}</small>}
-            </div>
-            <span>{contact.email}</span>
-            <span>{contact.phone}</span>
-          </div>
-          <div className="actions">
-            <Link to={`../edit/${contact.id}`}>
-              <img src={edit} alt="Edit" />
-            </Link>
-            <button type="button" onClick={() => onDeleteContact(contact)}>
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
-      ))}
-    </>
-  );
+  onDeleteContact
+}: any) {
+  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+  return <>
+    {filteredContacts.length > 0 && (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      <ListHeader $orderBy={orderBy}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <button
+          type="button"
+          className="sort-button"
+          onClick={onToggleOrderBy}
+        >
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+          <span>Nome</span> <img src={arrow} alt="Arrow" />
+        </button>
+      </ListHeader>
+    )}
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+    {filteredContacts.map((contact: any) => <Card key={contact.id}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      <div className="info">
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <div className="contact-name">
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+          <strong>{contact.name}</strong>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+          {contact.category.name && <small>{contact.category.name}</small>}
+        </div>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <span>{contact.email}</span>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <span>{contact.phone}</span>
+      </div>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      <div className="actions">
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <Link to={`../edit/${contact.id}`}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+          <img src={edit} alt="Edit" />
+        </Link>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+        <button type="button" onClick={() => onDeleteContact(contact)}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+          <img src={trash} alt="Delete" />
+        </button>
+      </div>
+    </Card>)}
+  </>;
 }
 
 ContactsList.propTypes = {

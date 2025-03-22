@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+// @ts-expect-error TS(6142): Module './useIsMounted' was resolved to '/home/thi... Remove this comment to see the full error message
 import useIsMounted from './useIsMounted';
 
 /**
@@ -20,7 +21,7 @@ export default function useSafeAsyncAction() {
   const isMounted = useIsMounted();
 
   const runSafeAsyncAction = useCallback(
-    (callback) => {
+    (callback: any) => {
       if (isMounted()) {
         callback();
       }

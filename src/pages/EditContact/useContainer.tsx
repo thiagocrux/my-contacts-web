@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import ContactsService from '../../services/ContactsService';
 import toast from '../../utils/toast';
+// @ts-expect-error TS(6142): Module '../../hooks/useSafeAsyncAction' was resolv... Remove this comment to see the full error message
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import isAbortError from '../../utils/isAbortError';
 
@@ -26,6 +27,7 @@ export default function useContainer() {
         );
 
         safeAsyncAction(() => {
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           contactFormRef.current.fillFormFields(contact);
           setContactName(contact.name);
           setIsLoading(false);
@@ -53,7 +55,7 @@ export default function useContainer() {
     };
   }, [id, navigate, safeAsyncAction]);
 
-  async function handleSubmit(contact) {
+  async function handleSubmit(contact: any) {
     try {
       const updatedContact = await ContactsService.updateContact(id, contact);
       setContactName(updatedContact.name);

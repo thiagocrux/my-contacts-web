@@ -24,13 +24,14 @@ export default function useHome() {
   const filteredContacts = useMemo(
     () =>
       contacts.filter((contact) =>
+        // @ts-expect-error TS(2339): Property 'name' does not exist on type 'never'.
         contact.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
       ),
     [contacts, deferredSearchTerm]
   );
 
   const loadContacts = useCallback(
-    async (signal) => {
+    async (signal: any) => {
       try {
         setIsLoading(true);
 
@@ -68,15 +69,16 @@ export default function useHome() {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
   }, []);
 
-  function handleChangeSearchTerm(event) {
+  function handleChangeSearchTerm(event: any) {
     setSearchTerm(event.target.value);
   }
 
   function handleTryAgain() {
+    // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
     loadContacts();
   }
 
-  const handleDeleteContact = useCallback((contact) => {
+  const handleDeleteContact = useCallback((contact: any) => {
     setContactBeingDeleted(contact);
     setIsDeleteModalVisible(true);
   }, []);
@@ -88,10 +90,12 @@ export default function useHome() {
   async function handleConfirmDeleteContact() {
     try {
       setIsLoadingDelete(true);
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       await ContactsService.deleteContact(contactBeingDeleted.id);
       handleCloseDeleteModal();
 
       setContacts((prevState) =>
+        // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
         prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
       );
 

@@ -2,11 +2,12 @@ import APIError from '../../errors/APIError';
 import delay from '../../utils/delay';
 
 class HttpClient {
-  constructor(baseURL) {
+  constructor(baseURL: any) {
+    // @ts-expect-error TS(2339): Property 'baseURL' does not exist on type 'HttpCli... Remove this comment to see the full error message
     this.baseURL = baseURL;
   }
 
-  async get(path, options) {
+  async get(path: any, options: any) {
     return this.makeRequest(path, {
       method: 'GET',
       headers: options?.headers,
@@ -14,7 +15,7 @@ class HttpClient {
     });
   }
 
-  post(path, options) {
+  post(path: any, options: any) {
     return this.makeRequest(path, {
       method: 'POST',
       body: options.body,
@@ -22,7 +23,7 @@ class HttpClient {
     });
   }
 
-  put(path, options) {
+  put(path: any, options: any) {
     return this.makeRequest(path, {
       method: 'PUT',
       body: options.body,
@@ -30,14 +31,14 @@ class HttpClient {
     });
   }
 
-  delete(path, options) {
+  delete(path: any, options: any) {
     return this.makeRequest(path, {
       method: 'DELETE',
       headers: options?.headers,
     });
   }
 
-  async makeRequest(path, options) {
+  async makeRequest(path: any, options: any) {
     await delay(500);
     const headers = new Headers();
 
@@ -46,11 +47,13 @@ class HttpClient {
     }
 
     if (options.headers) {
+      // @ts-expect-error TS(2550): Property 'entries' does not exist on type 'ObjectC... Remove this comment to see the full error message
       Object.entries(options.headers).forEach(([name, value]) => {
         headers.append(name, value);
       });
     }
 
+    // @ts-expect-error TS(2339): Property 'baseURL' does not exist on type 'HttpCli... Remove this comment to see the full error message
     const response = await fetch(`${this.baseURL}${path}`, {
       method: options.method,
       body: JSON.stringify(options.body),
