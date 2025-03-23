@@ -1,12 +1,12 @@
-import useAnimatedUnmount from '../../hooks/useAnimatedUnmount';
-import ReactPortal from '../ReactPortal';
-import Spinner from '../Spinner';
+import { ReactPortal, Spinner } from '../../components';
+import { useAnimatedUnmount } from '../../hooks';
 
 import { Overlay } from './styles';
 
 type Props = {
   isLoading: boolean;
 };
+
 export default function Loader({ isLoading }: Props) {
   const { animatedElementRef, shouldRender } = useAnimatedUnmount(isLoading);
 

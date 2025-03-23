@@ -1,9 +1,9 @@
-import HttpClient from './utils/HttpClient';
-import ContactMapper from './mappers/ContactMapper';
+import { HttpClient } from './utils';
+import { ContactMapper } from './mappers';
 import { ContactFormInput } from '../types';
 
 class ContactsService {
-  httpClient: HttpClient;
+  private httpClient: HttpClient;
 
   constructor() {
     this.httpClient = new HttpClient('http://localhost:3001');

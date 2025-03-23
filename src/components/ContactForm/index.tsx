@@ -1,11 +1,8 @@
 import { ChangeEvent, RefObject } from 'react';
 
-import Button from '../Button';
-import FormGroup from '../FormGroup';
-import Input from '../Input';
-import Select from '../Select';
-import useContainer from './useContainer';
+import { Button, FormGroup, Input, Select } from '../../components';
 import { Category, ContactFormInput, ContactFormRef } from '../../types';
+import useContainer from './useContainer';
 
 import { ButtonContainer, Form } from './styles';
 
@@ -39,7 +36,7 @@ export default function ContactForm({ buttonLabel, onSubmit, ref }: Props) {
         <Input
           value={name}
           placeholder="Nome*"
-          error={getErrorMessageByFieldName('name')}
+          $error={getErrorMessageByFieldName('name')}
           onChange={handleNameChange}
           disabled={isSubmitting}
         />
@@ -49,7 +46,7 @@ export default function ContactForm({ buttonLabel, onSubmit, ref }: Props) {
           value={email}
           type="email"
           placeholder="Email"
-          error={getErrorMessageByFieldName('email')}
+          $error={getErrorMessageByFieldName('email')}
           onChange={handleEmailChange}
           disabled={isSubmitting}
         />

@@ -8,15 +8,15 @@ import {
   RefObject,
 } from 'react';
 
-import { Toast } from '../types';
+import { Message } from '../types';
 
 type RenderItem = (
-  item: Toast,
+  item: Message,
   options: { isLeaving: boolean; animatedRef: RefObject<HTMLDivElement> }
 ) => ReactElement;
 
 export default function useAnimatedList(initialValue = []) {
-  const [items, setItems] = useState<Toast[]>(initialValue);
+  const [items, setItems] = useState<Message[]>(initialValue);
   const [itemsPendingRemoval, setItemsPendingRemoval] = useState<number[]>([]);
   const animatedRefs = useRef(new Map());
   const animationEndListeners = useRef(new Map());

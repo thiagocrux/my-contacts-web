@@ -8,6 +8,9 @@ import { default as trash } from './images/icons/trash.svg';
 import { default as xCircle } from './images/icons/x-circle.svg';
 import { default as logo } from './images/logo.svg';
 
+export { default as GlobalStyles } from './styles/globals';
+export { default as defaultTheme } from './styles/themes/default';
+
 export {
   arrow,
   checkCircle,

@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
-import Spinner from '../Spinner';
+
+import { Spinner } from '../../components';
 
 import { Container } from './styles';
 
 type Props = {
   children: ReactNode;
-  error?: boolean | null;
+  error?: string | null;
   isLoading?: boolean;
 };
 export default function FormGroup({

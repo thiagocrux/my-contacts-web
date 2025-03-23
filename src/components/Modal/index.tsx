@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 
-import useAnimatedUnmount from '../../hooks/useAnimatedUnmount';
-import Button from '../Button';
-import ReactPortal from '../ReactPortal';
+import { Button, ReactPortal } from '../../components';
+import { useAnimatedUnmount } from '../../hooks';
 
 import { Container, Footer, Overlay } from './styles';
 

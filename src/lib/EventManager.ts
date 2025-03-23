@@ -1,10 +1,10 @@
-import { Toast } from '../types';
+import { Message } from '../types';
 
-type Payload = Omit<Toast, 'id'>;
+type Payload = Omit<Message, 'id'>;
 type Listener = (payload: Payload) => void;
 
 export default class EventManager {
-  listeners;
+  private listeners;
 
   constructor() {
     this.listeners = new Map();

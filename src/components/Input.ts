@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.input<{ error?: boolean }>`
+export default styled.input<{ $error?: string }>`
   width: 100%;
   border: 2px solid #fff;
   background: #fff;
@@ -21,8 +21,8 @@ export default styled.input<{ error?: boolean }>`
     border-color: ${({ theme }) => theme.colors.gray[200]};
   }
 
-  ${({ theme, error }) =>
-    error &&
+  ${({ theme, $error }) =>
+    $error &&
     css`
       color: ${theme.colors.danger.main};
       border-color: ${theme.colors.danger.main} !important;

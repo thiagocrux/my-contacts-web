@@ -9,7 +9,7 @@ type Options = {
 };
 
 class HttpClient {
-  baseURL: string;
+  private baseURL: string;
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;

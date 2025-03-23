@@ -1,8 +1,8 @@
-import CategoryMapper from './mappers/CategoryMapper';
-import HttpClient from './utils/HttpClient';
+import { CategoryMapper } from './mappers';
+import { HttpClient } from './utils';
 
 class ContactsService {
-  httpClient: HttpClient;
+  private httpClient: HttpClient;
 
   constructor() {
     this.httpClient = new HttpClient('http://localhost:3001');

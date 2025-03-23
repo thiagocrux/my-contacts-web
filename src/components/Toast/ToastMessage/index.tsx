@@ -1,42 +1,42 @@
 import { useEffect, memo, Ref } from 'react';
 
 import { xCircle, checkCircle } from '../../../assets';
-import { Toast } from '../../../types';
+import { Message } from '../../../types';
 
 import { Container } from './styles';
 
 type Props = {
-  message: Toast;
+  message: Message;
   isLeaving: boolean;
-  onRemoveMessage: (id: number) => void;
+  onMessageRemoval: (id: number) => void;
   animatedRef: Ref<HTMLDivElement>;
 };
 
 function ToastMessage({
   message,
   isLeaving,
-  onRemoveMessage,
+  onMessageRemoval,
   animatedRef,
 }: Props) {
   useEffect(() => {
     const timeoutId = setTimeout(
-      () => onRemoveMessage(message.id),
+      () => onMessageRemoval(message.id),
       message.duration
     );
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [message, onRemoveMessage]);
+  }, [message, onMessageRemoval]);
 
-  function handleRemoveToast() {
-    onRemoveMessage(message.id);
+  function handleToastRemoval() {
+    onMessageRemoval(message.id);
   }
 
   return (
     <Container
       ref={animatedRef}
-      onClick={handleRemoveToast}
+      onClick={handleToastRemoval}
       tabIndex={0}
       role="button"
       $type={message.type}

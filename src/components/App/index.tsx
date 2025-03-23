@@ -1,11 +1,8 @@
 import { ThemeProvider } from 'styled-components';
 
 import Routes from '../../Routes';
-import Header from '../Header';
-import ToastContainer from '../Toast/ToastContainer';
-
-import GlobalStyles from '../../assets/styles/globals';
-import defaultTheme from '../../assets/styles/themes/default';
+import { defaultTheme, GlobalStyles } from '../../assets';
+import { Header, ToastContainer } from '../../components';
 
 import { Container } from './styles';
 

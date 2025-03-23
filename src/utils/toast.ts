@@ -1,4 +1,4 @@
-import { Toast } from '../types';
+import { Message } from '../types';
 
 import EventManager from '../lib/EventManager';
 
@@ -8,6 +8,6 @@ export default function toast({
   type,
   text,
   duration = 7000,
-}: Omit<Toast, 'id'>) {
+}: Omit<Message, 'id'>) {
   toastEventManager.emit('addtoast', { type, text, duration });
 }

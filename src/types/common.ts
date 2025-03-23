@@ -26,7 +26,7 @@ export type ContactFormRef = {
   resetFields: () => void;
 };
 
-export type Toast = {
+export type Message = {
   id: number;
   type: 'default' | 'success' | 'danger';
   text: string;
