@@ -1,9 +1,8 @@
 import globals from 'globals';
-import pluginJs from '@eslint/js';
+import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -11,13 +10,12 @@ export default [
     files: ['**/*.{js,ts,mjs,mts,cjs,jsx,tsx}'],
   },
   { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
+  js.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat['jsx-runtime'],
   pluginReactHooks.configs['recommended-latest'],
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
-  eslintConfigPrettier,
   {
     settings: {
       react: {
