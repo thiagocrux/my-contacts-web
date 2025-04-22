@@ -16,8 +16,8 @@ export default function Header({
   const alignment = hasError
     ? 'flex-end'
     : contactsQuantity > 0
-    ? 'space-between'
-    : 'center';
+      ? 'space-between'
+      : 'center';
 
   return (
     <Container $justifyContent={alignment}>
