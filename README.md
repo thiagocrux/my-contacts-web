@@ -79,7 +79,7 @@ This section describes the available scripts in the `package.json` file and thei
   pnpm lint
   ```
 
-## Useful links
+## Related links
 
 - [JStack](https://app.jstack.com.br/)
 
